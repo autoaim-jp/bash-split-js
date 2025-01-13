@@ -1,0 +1,51 @@
+#!/bin/bash
+
+# 入力ファイルと出力ディレクトリの定義
+INPUT_FILE="data/app.js"
+OUTPUT_DIR="data/mod"
+
+# 入力ファイルの存在を確認
+if [[ ! -f "$INPUT_FILE" ]]; then
+  echo "Error: $INPUT_FILE not found."
+  exit 1
+fi
+
+# 出力ディレクトリを作成
+mkdir -p "$OUTPUT_DIR"
+
+# 関数ごとの分割とimport文の生成
+IMPORT_STATEMENTS=()
+
+# 正規表現で関数を抽出して処理
+while read -r line; do
+  if [[ $line =~ ^const[[:space:]]+([a-zA-Z_][a-zA-Z0-9_]*)[[:space:]]*=[[:space:]]*\([^\)]*\)[[:space:]]*=\>[[:space:]]*\{ ]]; then
+    FUNC_NAME="${BASH_REMATCH[1]}"
+    OUTPUT_FILE="$OUTPUT_DIR/$FUNC_NAME.js"
+
+    # 関数定義の終わりまでを抽出
+    FUNCTION_CONTENT="$line"
+    while IFS= read -r subline; do
+      FUNCTION_CONTENT+="\n$subline"
+      [[ $subline == *"};" ]] && break
+    done
+
+    # export const に変換して出力
+    echo -e "${FUNCTION_CONTENT/const/export const}" > "$OUTPUT_FILE"
+
+    # import文を保存
+    IMPORT_STATEMENTS+=("import { $FUNC_NAME } from './$FUNC_NAME.js';")
+  fi
+
+done < "$INPUT_FILE"
+
+# 結果を表示
+if [[ ${#IMPORT_STATEMENTS[@]} -gt 0 ]]; then
+  echo -e "\n以下のimport文をapp.jsに追加してください:\n"
+  for statement in "${IMPORT_STATEMENTS[@]}"; do
+    echo "$statement"
+  done
+  echo -e "\n関数を分割して $OUTPUT_DIR に保存しました"
+else
+  echo "Error: No functions found in $INPUT_FILE."
+fi
+
