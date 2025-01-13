@@ -9,4 +9,3 @@ export const handleFileList = ({ requestId }) => {
   const handleResult = { result: { fileDirList } }
   return handleResult
 }
-

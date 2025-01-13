@@ -9,4 +9,3 @@ export const handleLookupChatgptResponse = ({ requestId }) => {
 
   return handleResult
 }
-

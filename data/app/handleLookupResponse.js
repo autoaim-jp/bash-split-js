@@ -9,4 +9,3 @@ export const handleLookupResponse = ({ requestId }) => {
 
   return handleResult
 }
-

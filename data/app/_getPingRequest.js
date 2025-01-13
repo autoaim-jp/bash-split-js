@@ -25,4 +25,3 @@ export const _getPingRequest = ({ requestId, fileBuffer, rightTopText, leftTopTe
 
   return messageBuffer
 }
-
