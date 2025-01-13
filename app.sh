@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # 入力ファイルと出力ディレクトリの定義
-DIR_BASE="./data/"
-INPUT_FILE="${DIR_BASE}app.js"
+DIR_BASE=${1:-./data/}
+INPUT_FILE=${DIR_BASE}${2:-app.js}
 
 INPUT_FILE_BASENAME=$(basename $INPUT_FILE)
 OUTPUT_DIR=${DIR_BASE}${INPUT_FILE_BASENAME/\.js/}/
@@ -29,7 +29,7 @@ IMPORT_STATEMENTS=()
 
 # 正規表現で関数を抽出して処理
 while IFS= read -r line; do
-  if [[ $line =~ ^const[[:space:]]+([a-zA-Z_][a-zA-Z0-9_]*)[[:space:]]*=[[:space:]]*\(\{[^\)]*\}\)[[:space:]]*=\>[[:space:]]*\{ ]]; then
+  if [[ $line =~ ^const[[:space:]]+([a-zA-Z_][a-zA-Z0-9_]*)[[:space:]]*=[[:space:]]*(async)*[[:space:]]*\(\{[^\)]*\}\)[[:space:]]*=\>[[:space:]]*\{ ]]; then
     FUNC_NAME="${BASH_REMATCH[1]}"
     OUTPUT_FILE="$OUTPUT_DIR/$FUNC_NAME.js"
 
@@ -65,7 +65,7 @@ EOF
     cat $OUTPUT_FILE
 
     # import文を保存
-    IMPORT_STATEMENTS+=("import { $FUNC_NAME } from './$FUNC_NAME.js'")
+    IMPORT_STATEMENTS+=("import { $FUNC_NAME } from './${INPUT_FILE_BASENAME}/$FUNC_NAME.js'")
   fi
 
 done < "$INPUT_FILE"
