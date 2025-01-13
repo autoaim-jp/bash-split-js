@@ -17,16 +17,27 @@ mkdir -p "$OUTPUT_DIR"
 IMPORT_STATEMENTS=()
 
 # 正規表現で関数を抽出して処理
-while read -r line; do
-  if [[ $line =~ ^const[[:space:]]+([a-zA-Z_][a-zA-Z0-9_]*)[[:space:]]*=[[:space:]]*\([^\)]*\)[[:space:]]*=\>[[:space:]]*\{ ]]; then
+while IFS= read -r line; do
+  if [[ $line =~ ^const[[:space:]]+([a-zA-Z_][a-zA-Z0-9_]*)[[:space:]]*=[[:space:]]*\(\{[^\)]*\}\)[[:space:]]*=\>[[:space:]]*\{ ]]; then
     FUNC_NAME="${BASH_REMATCH[1]}"
     OUTPUT_FILE="$OUTPUT_DIR/$FUNC_NAME.js"
 
     # 関数定義の終わりまでを抽出
     FUNCTION_CONTENT="$line"
+    BRACE_COUNT=1
     while IFS= read -r subline; do
       FUNCTION_CONTENT+="\n$subline"
-      [[ $subline == *"};" ]] && break
+      # '{' の数を数え、ブロックの深さを追跡
+      if [[ $subline == *'{'* ]]; then
+        ((BRACE_COUNT++))
+      fi
+      if [[ $subline == *'}'* ]]; then
+        ((BRACE_COUNT--))
+        # ブロックスコープが終了したら停止
+        if [[ $BRACE_COUNT -eq 0 ]]; then
+          break
+        fi
+      fi
     done
 
     # export const に変換して出力
