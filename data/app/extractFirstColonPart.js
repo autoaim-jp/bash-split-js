@@ -7,3 +7,4 @@ export const extractFirstColonPart = ({ str }) => {
   const firstColonLine = lines.find(line => line.includes(':'))
   return firstColonLine ? firstColonLine.split(':').slice(1).join(':').trim() : null
 }
+

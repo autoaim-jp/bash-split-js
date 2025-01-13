@@ -1,5 +1,5 @@
 import { mod } from init.js
-
+export default {}
 
 export const _getPingRequest = ({ requestId, fileBuffer, rightTopText, leftTopText, rightBottomText }) => {
   const requestType = 'ping'

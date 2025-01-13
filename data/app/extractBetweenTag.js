@@ -7,3 +7,4 @@ export const extractBetweenTag = ({ str }) => {
   const match = str.match(regex)
   return match ? match[1].trim() : ''
 }
+

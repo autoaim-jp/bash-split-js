@@ -7,3 +7,4 @@ export const handleFileContent = ({ requestId, fileName }) => {
   const handleResultBuffer = mod.input.getFileContent({ filePath })
   return handleResultBuffer
 }
+

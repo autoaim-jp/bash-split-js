@@ -1,12 +1,23 @@
 #!/bin/bash
 
 # 入力ファイルと出力ディレクトリの定義
-INPUT_FILE="data/app.js"
-OUTPUT_DIR="data/mod"
+DIR_BASE="./data/"
+INPUT_FILE="${DIR_BASE}app.js"
 
-# 入力ファイルの存在を確認
+INPUT_FILE_BASENAME=$(basename $INPUT_FILE)
+OUTPUT_DIR=${DIR_BASE}${INPUT_FILE_BASENAME/\.js/}/
+
+echo "output dir: $OUTPUT_DIR"
+
+# 入力ファイルがなければエラー
 if [[ ! -f "$INPUT_FILE" ]]; then
   echo "Error: $INPUT_FILE not found."
+  exit 1
+fi
+
+# 出力ディレクトリがあればエラー
+if [[  -d "$OUTPUT_DIR" ]]; then
+  echo "Error: $OUTPUT_DIR already exists."
   exit 1
 fi
 
@@ -41,11 +52,20 @@ while IFS= read -r line; do
     done
 
     # export const に変換して出力
-    echo -e "import { mod } from init.js\n" > "$OUTPUT_FILE"
-    echo -e "${FUNCTION_CONTENT/const/export const}" >> "$OUTPUT_FILE"
+    # bug: split('\n')などが改行されてしまう
+    cat <<'EOF' > "$OUTPUT_FILE"
+import { mod } from init.js
+export default {}
+
+EOF
+
+    echo -e "${FUNCTION_CONTENT/const/export const}\n" >> "$OUTPUT_FILE"
+
+    echo "=================================================="
+    cat $OUTPUT_FILE
 
     # import文を保存
-    IMPORT_STATEMENTS+=("import { $FUNC_NAME } from './$FUNC_NAME.js';")
+    IMPORT_STATEMENTS+=("import { $FUNC_NAME } from './$FUNC_NAME.js'")
   fi
 
 done < "$INPUT_FILE"

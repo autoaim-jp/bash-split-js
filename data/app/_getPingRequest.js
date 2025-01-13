@@ -1,8 +1,8 @@
 import { mod } from init.js
 export default {}
 
-export const _getDummyRequest = ({ requestId }) => {
-  const requestType = 'main_dummy'
+export const _getPingRequest = ({ requestId, fileBuffer, rightTopText, leftTopText, rightBottomText }) => {
+  const requestType = 'ping'
 
   const currentDelimiter = Buffer.from(mod.lib.getUlid())
   const delimiterDelimiter = Buffer.from('|')
@@ -13,7 +13,16 @@ export const _getDummyRequest = ({ requestId }) => {
     currentDelimiter,
     Buffer.from(requestId),
     currentDelimiter,
+    Buffer.from(rightTopText),
+    currentDelimiter,
+    Buffer.from(leftTopText),
+    currentDelimiter,
+    Buffer.from(rightBottomText),
+    currentDelimiter,
+    fileBuffer, 
+    currentDelimiter,
   ])
 
   return messageBuffer
 }
+

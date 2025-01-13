@@ -1,5 +1,5 @@
 import { mod } from init.js
-
+export default {}
 
 export const handleLookupChatgptResponse = ({ requestId }) => {
   const handleResult = store[requestId]
