@@ -1,3 +1,6 @@
+import { mod } from init.js
+
+
 export const handleFileContent = ({ requestId, fileName }) => {
   const MOVIE_DIR_PATH = mod.setting.getValue('path.MOVIE_DIR_PATH') 
   const filePath = `${MOVIE_DIR_PATH}${requestId}/${fileName}`

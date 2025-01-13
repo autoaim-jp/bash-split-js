@@ -1,3 +1,6 @@
+import { mod } from init.js
+
+
 export const extractLast5ColonPart = ({ str }) => {
   const lineList = str.split('
 ').filter(line => line.includes(':'))

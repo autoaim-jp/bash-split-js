@@ -1,3 +1,6 @@
+import { mod } from init.js
+
+
 export const _getMainRequest = ({ requestId, fileList, title, narrationCsv }) => {
   const requestType = 'main'
 

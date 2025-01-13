@@ -41,7 +41,8 @@ while IFS= read -r line; do
     done
 
     # export const に変換して出力
-    echo -e "${FUNCTION_CONTENT/const/export const}" > "$OUTPUT_FILE"
+    echo -e "import { mod } from init.js\n" > "$OUTPUT_FILE"
+    echo -e "${FUNCTION_CONTENT/const/export const}" >> "$OUTPUT_FILE"
 
     # import文を保存
     IMPORT_STATEMENTS+=("import { $FUNC_NAME } from './$FUNC_NAME.js';")

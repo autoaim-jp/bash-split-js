@@ -1,3 +1,6 @@
+import { mod } from init.js
+
+
 export const extractBetweenTag = ({ str }) => {
   const regex = /# ===
 ([\s\S]*?)# ===/

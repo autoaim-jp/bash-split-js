@@ -1,3 +1,6 @@
+import { mod } from init.js
+
+
 export const _getDummyRequest = ({ requestId }) => {
   const requestType = 'main_dummy'
 
