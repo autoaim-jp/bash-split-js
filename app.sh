@@ -27,6 +27,7 @@ mkdir -p "$OUTPUT_DIR"
 
 # 関数ごとの分割とimport文の生成
 IMPORT_STATEMENTS=()
+EXPORT_STATEMENTS=()
 
 # 正規表現で関数を抽出して処理
 while IFS= read -r line; do
@@ -55,12 +56,17 @@ while IFS= read -r line; do
     done
 
     # export const に変換して出力
-    # bug: split('\n')などが改行されてしまう
     cat <<'EOF' > "$OUTPUT_FILE"
-import { mod, store } from './init.js'
+import { mod } from './init.js'
 export default {}
 
 EOF
+
+#    cat <<'EOF' > "$OUTPUT_FILE"
+#import { mod, store } from './init.js'
+#export default {}
+#
+#EOF
 
     for statement in "${FUNCTION_CONTENT[@]}"; do
       echo "$statement" >> "$OUTPUT_FILE"
@@ -69,16 +75,23 @@ EOF
 
     # import文を保存
     IMPORT_STATEMENTS+=("import { $FUNC_NAME } from './${DIR_NAME}/$FUNC_NAME.js'")
+    EXPORT_STATEMENTS+=("  $FUNC_NAME,")
   fi
 
 done < "$INPUT_FILE"
 
 # 結果を表示
 if [[ ${#IMPORT_STATEMENTS[@]} -gt 0 ]]; then
-  echo -e "\n以下のimport文をapp.jsに追加してください:\n"
+  echo -e "\n以下を${INPUT_FILE}に追加してください:\n"
   for statement in "${IMPORT_STATEMENTS[@]}"; do
     echo "$statement"
   done
+  echo -e "\nexport default {"
+  for statement in "${EXPORT_STATEMENTS[@]}"; do
+    echo "$statement"
+  done
+  echo -e "}\n"
+ 
   echo -e "\n関数を分割して $OUTPUT_DIR に保存しました"
 else
   echo "Error: No functions found in $INPUT_FILE."
