@@ -1,4 +1,4 @@
-import { mod } from init.js
+import { mod, store } from './init.js'
 export default {}
 
 export const _getMainRequest = ({ requestId, fileList, title, narrationCsv }) => {
@@ -35,3 +35,4 @@ export const _getMainRequest = ({ requestId, fileList, title, narrationCsv }) =>
 
   return messageBuffer
 }
+

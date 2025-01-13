@@ -30,7 +30,7 @@ IMPORT_STATEMENTS=()
 
 # 正規表現で関数を抽出して処理
 while IFS= read -r line; do
-  if [[ $line =~ ^const[[:space:]]+([a-zA-Z_][a-zA-Z0-9_]*)[[:space:]]*=[[:space:]]*(async)*[[:space:]]*\(\{[^\)]*\}\)[[:space:]]*=\>[[:space:]]*\{ ]]; then
+  if [[ $line =~ ^const[[:space:]]+([a-zA-Z_][a-zA-Z0-9_]*)[[:space:]]*=[[:space:]]*(async)*[[:space:]]*\([^\)]*\)[[:space:]]*=\>[[:space:]]*\{ ]]; then
     FUNC_NAME="${BASH_REMATCH[1]}"
     OUTPUT_FILE="$OUTPUT_DIR/$FUNC_NAME.js"
 
@@ -57,7 +57,7 @@ while IFS= read -r line; do
     # export const に変換して出力
     # bug: split('\n')などが改行されてしまう
     cat <<'EOF' > "$OUTPUT_FILE"
-import { mod } from init.js
+import { mod, store } from './init.js'
 export default {}
 
 EOF
@@ -65,6 +65,7 @@ EOF
     for statement in "${FUNCTION_CONTENT[@]}"; do
       echo "$statement" >> "$OUTPUT_FILE"
     done
+    echo >> "$OUTPUT_FILE"
 
     # import文を保存
     IMPORT_STATEMENTS+=("import { $FUNC_NAME } from './${DIR_NAME}/$FUNC_NAME.js'")

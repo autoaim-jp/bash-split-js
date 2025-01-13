@@ -1,4 +1,4 @@
-import { mod } from init.js
+import { mod, store } from './init.js'
 export default {}
 
 export const handleRegisterMainPrompt = async ({ fileList, title, narrationCsv }) => {
@@ -13,3 +13,4 @@ export const handleRegisterMainPrompt = async ({ fileList, title, narrationCsv }
   const handleResult = { isRegistered: true, requestId }
   return handleResult
 }
+

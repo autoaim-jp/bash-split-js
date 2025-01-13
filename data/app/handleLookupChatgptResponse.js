@@ -1,4 +1,4 @@
-import { mod } from init.js
+import { mod, store } from './init.js'
 export default {}
 
 export const handleLookupChatgptResponse = ({ requestId }) => {
@@ -9,3 +9,4 @@ export const handleLookupChatgptResponse = ({ requestId }) => {
 
   return handleResult
 }
+

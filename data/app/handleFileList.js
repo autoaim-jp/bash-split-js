@@ -1,4 +1,4 @@
-import { mod } from init.js
+import { mod, store } from './init.js'
 export default {}
 
 export const handleFileList = ({ requestId }) => {
@@ -9,3 +9,4 @@ export const handleFileList = ({ requestId }) => {
   const handleResult = { result: { fileDirList } }
   return handleResult
 }
+

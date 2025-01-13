@@ -1,4 +1,4 @@
-import { mod } from init.js
+import { mod, store } from './init.js'
 export default {}
 
 export const _startGenerateImageAndMovie = async ({ requestId, title, themeText, targetText, prompt, chatgptResponse, narrationCsv, imagePromptList }) => {
@@ -27,3 +27,4 @@ export const _startGenerateImageAndMovie = async ({ requestId, title, themeText,
       })
     })
   })
+

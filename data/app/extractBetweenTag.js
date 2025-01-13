@@ -1,4 +1,4 @@
-import { mod } from init.js
+import { mod, store } from './init.js'
 export default {}
 
 export const extractBetweenTag = ({ str }) => {
@@ -6,3 +6,4 @@ export const extractBetweenTag = ({ str }) => {
   const match = str.match(regex)
   return match ? match[1].trim() : ''
 }
+

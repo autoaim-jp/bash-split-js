@@ -1,4 +1,4 @@
-import { mod } from init.js
+import { mod, store } from './init.js'
 export default {}
 
 export const handleRegisterPrompt = async ({ prompt }) => {
@@ -17,3 +17,4 @@ export const handleRegisterPrompt = async ({ prompt }) => {
   const handleResult = { isRegistered: true, requestId }
   return handleResult
 }
+

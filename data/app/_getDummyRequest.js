@@ -1,4 +1,4 @@
-import { mod } from init.js
+import { mod, store } from './init.js'
 export default {}
 
 export const _getDummyRequest = ({ requestId }) => {
@@ -17,3 +17,4 @@ export const _getDummyRequest = ({ requestId }) => {
 
   return messageBuffer
 }
+

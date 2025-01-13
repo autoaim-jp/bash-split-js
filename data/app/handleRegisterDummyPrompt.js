@@ -1,4 +1,4 @@
-import { mod } from init.js
+import { mod, store } from './init.js'
 export default {}
 
 export const handleRegisterDummyPrompt = async ({}) => {
@@ -12,3 +12,4 @@ export const handleRegisterDummyPrompt = async ({}) => {
   const handleResult = { isRegistered: true, requestId }
   return handleResult
 }
+

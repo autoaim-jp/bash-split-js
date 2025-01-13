@@ -1,4 +1,4 @@
-import { mod } from init.js
+import { mod, store } from './init.js'
 export default {}
 
 export const handleRegisterStoryPrompt = async ({ themeText, targetText }) => {
@@ -48,3 +48,4 @@ export const handleRegisterStoryPrompt = async ({ themeText, targetText }) => {
   const handleResult = { isRegistered: true, requestId }
   return handleResult
 }
+

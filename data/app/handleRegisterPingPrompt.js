@@ -1,4 +1,4 @@
-import { mod } from init.js
+import { mod, store } from './init.js'
 export default {}
 
 export const handleRegisterPingPrompt = async ({ fileBuffer, rightTopText, leftTopText, rightBottomText }) => {
@@ -12,3 +12,4 @@ export const handleRegisterPingPrompt = async ({ fileBuffer, rightTopText, leftT
   const handleResult = { isRegistered: true, requestId }
   return handleResult
 }
+

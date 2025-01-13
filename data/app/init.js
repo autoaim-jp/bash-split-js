@@ -1,4 +1,4 @@
-import { mod } from init.js
+import { mod, store } from './init.js'
 export default {}
 
 export const init = async ({ setting, output, input, lib, amqpConnection }) => {
@@ -10,3 +10,4 @@ export const init = async ({ setting, output, input, lib, amqpConnection }) => {
   mod.input = input
   mod.lib = lib
 }
+

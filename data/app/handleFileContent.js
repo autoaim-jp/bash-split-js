@@ -1,4 +1,4 @@
-import { mod } from init.js
+import { mod, store } from './init.js'
 export default {}
 
 export const handleFileContent = ({ requestId, fileName }) => {
@@ -7,3 +7,4 @@ export const handleFileContent = ({ requestId, fileName }) => {
   const handleResultBuffer = mod.input.getFileContent({ filePath })
   return handleResultBuffer
 }
+

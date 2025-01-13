@@ -1,4 +1,4 @@
-import { mod } from init.js
+import { mod, store } from './init.js'
 export default {}
 
 export const _getPingRequest = ({ requestId, fileBuffer, rightTopText, leftTopText, rightBottomText }) => {
@@ -25,3 +25,4 @@ export const _getPingRequest = ({ requestId, fileBuffer, rightTopText, leftTopTe
 
   return messageBuffer
 }
+
